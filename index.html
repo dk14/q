@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Untitled</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>qQqQq</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13771,124 +13771,13 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-scala"><pre><span></span><span class="k">def</span> <span class="n">produceArrayN</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-    <span class="k">def</span> <span class="n">fifthyFifthyRat</span> <span class="k">=</span> <span class="k">if</span><span class="o">(</span><span class="n">scala</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">Random</span><span class="o">.</span><span class="n">nextBoolean</span><span class="o">)</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
-    <span class="nc">Array</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">n</span><span class="o">)(</span><span class="n">fifthyFifthyRat</span><span class="o">)</span>
-<span class="o">}</span>
-
-<span class="k">implicit</span> <span class="k">class</span> <span class="nc">Entangle</span><span class="o">(</span><span class="n">b</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="o">{</span>
-
-  <span class="k">def</span> <span class="n">entangleWith</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
-    <span class="k">var</span> <span class="n">bbb</span> <span class="k">=</span> <span class="n">b</span><span class="o">.</span><span class="n">toList</span>
-    <span class="k">def</span> <span class="n">pull</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-      <span class="k">val</span> <span class="n">i</span> <span class="k">=</span> <span class="nc">Option</span><span class="o">(</span><span class="n">bbb</span><span class="o">.</span><span class="n">indexWhere</span><span class="o">(</span><span class="k">_</span> <span class="o">==</span> <span class="n">value</span><span class="o">)).</span><span class="n">filter</span><span class="o">(</span><span class="k">_</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="o">).</span><span class="n">getOrElse</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-      <span class="k">val</span> <span class="n">res</span> <span class="k">=</span> <span class="n">bbb</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
-      <span class="n">bbb</span> <span class="k">=</span> <span class="n">bbb</span><span class="o">.</span><span class="n">patch</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="nc">Nil</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="c1">//remove i-th element from bbb</span>
-      <span class="n">res</span>
-    <span class="o">}</span>
-    <span class="k">val</span> <span class="n">newb</span> <span class="k">=</span> <span class="o">(</span><span class="n">a</span> <span class="n">zip</span> <span class="n">b</span><span class="o">).</span><span class="n">map</span><span class="o">{</span>
-        <span class="k">case</span> <span class="o">(</span><span class="n">aa</span><span class="o">,</span> <span class="n">bb</span><span class="o">)</span> <span class="k">=&gt;</span> 
-        <span class="k">if</span> <span class="o">(</span><span class="n">aa</span> <span class="o">==</span> <span class="n">bb</span> <span class="o">&amp;&amp;</span> <span class="n">aa</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="n">pull</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="k">else</span> <span class="n">pull</span><span class="o">(</span><span class="n">bb</span><span class="o">)</span>
-    <span class="o">}</span>
-    <span class="n">newb</span>
-  <span class="o">}</span>
-
-<span class="o">}</span>
-
-
-<span class="k">def</span> <span class="n">analyze</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
- 
-    <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="n">aa</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="k">=</span> <span class="n">aa</span><span class="o">.</span><span class="n">count</span><span class="o">(</span><span class="k">_</span> <span class="o">==</span> <span class="mi">1</span><span class="o">).</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">aa</span><span class="o">.</span><span class="n">size</span>
-    <span class="k">def</span> <span class="n">means</span><span class="o">(</span><span class="n">aa</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">Int</span><span class="o">)])</span> <span class="k">=</span> <span class="n">mean</span><span class="o">(</span><span class="n">aa</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">_1</span><span class="o">))</span> <span class="o">-&gt;</span> <span class="n">mean</span><span class="o">(</span><span class="n">aa</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">_2</span><span class="o">))</span>
-
-    <span class="k">def</span> <span class="n">score</span><span class="o">(</span><span class="n">aa</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[(</span><span class="kt">Int</span>, <span class="kt">Int</span><span class="o">)])</span> <span class="k">=</span> <span class="n">aa</span><span class="o">.</span><span class="n">count</span><span class="o">{</span><span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="o">}.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">aa</span><span class="o">.</span><span class="n">size</span>
-    
-    <span class="k">case</span> <span class="k">class</span> <span class="nc">Report</span><span class="o">(</span><span class="n">entangledE</span><span class="k">:</span> <span class="o">(</span><span class="kt">Double</span><span class="o">,</span> <span class="kt">Double</span><span class="o">),</span> <span class="n">originalE</span><span class="k">:</span> <span class="o">(</span><span class="kt">Double</span><span class="o">,</span> <span class="kt">Double</span><span class="o">),</span> <span class="n">entangledScore</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">originalScore</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span>    
-    
-    <span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">produceArrayN</span><span class="o">(</span><span class="n">n</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">produceArrayN</span><span class="o">(</span><span class="n">n</span><span class="o">)</span>
-  
-    <span class="k">val</span> <span class="n">entRight</span> <span class="k">=</span> <span class="n">right</span> <span class="n">entangleWith</span> <span class="n">left</span>
-    <span class="k">val</span> <span class="n">entangled</span> <span class="k">=</span> <span class="n">left</span> <span class="n">zip</span> <span class="n">entRight</span>
-    <span class="k">val</span> <span class="n">original</span> <span class="k">=</span> <span class="n">left</span> <span class="n">zip</span> <span class="n">right</span>
-    
-    <span class="nc">Report</span><span class="o">(</span><span class="n">means</span><span class="o">(</span><span class="n">entangled</span><span class="o">),</span> <span class="n">means</span><span class="o">(</span><span class="n">original</span><span class="o">),</span> <span class="n">score</span><span class="o">(</span><span class="n">entangled</span><span class="o">),</span> <span class="n">score</span><span class="o">(</span><span class="n">original</span><span class="o">))</span>
-<span class="o">}</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[1]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">produceArrayN</span>
-defined <span class="ansi-green-fg">class</span> <span class="ansi-cyan-fg">Entangle</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">analyze</span></pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-scala"><pre><span></span><span class="k">import</span> <span class="nn">$ivy.</span><span class="n">`org.plotly-scala::plotly-jupyter-scala:0.3.0`</span>
 
 <span class="k">import</span> <span class="nn">plotly._</span>
-<span class="k">import</span> <span class="nn">plotly.element._</span>
-<span class="k">import</span> <span class="nn">plotly.layout._</span>
 <span class="k">import</span> <span class="nn">plotly.JupyterScala._</span>
+<span class="k">import</span> <span class="nn">scala.math._</span>
 
 <span class="n">plotly</span><span class="o">.</span><span class="nc">JupyterScala</span><span class="o">.</span><span class="n">init</span><span class="o">()</span>
-
-<span class="k">val</span> <span class="n">epochs</span> <span class="k">=</span> <span class="mi">128</span>
-<span class="k">val</span> <span class="n">reports</span> <span class="k">=</span> <span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">epochs</span><span class="o">).</span><span class="n">toList</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span> <span class="k">=&gt;</span> <span class="n">analyze</span><span class="o">(</span><span class="mi">9036</span><span class="o">))</span>
-
-<span class="k">val</span> <span class="n">step</span> <span class="k">=</span> <span class="mf">0.01</span>
-
-<span class="k">val</span> <span class="n">toPlot</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span>
-    <span class="s">&quot;entangledLeft&quot;</span> <span class="o">-&gt;</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">entangledE</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span>
-    <span class="s">&quot;originalLeft&quot;</span> <span class="o">-&gt;</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">originalE</span><span class="o">.</span><span class="n">_1</span><span class="o">),</span>
-    <span class="s">&quot;entangledRight&quot;</span> <span class="o">-&gt;</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">entangledE</span><span class="o">.</span><span class="n">_2</span><span class="o">),</span>
-    <span class="s">&quot;originalRight&quot;</span> <span class="o">-&gt;</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">originalE</span><span class="o">.</span><span class="n">_2</span><span class="o">)</span>
-<span class="o">)</span>
-
-<span class="k">val</span> <span class="n">plot</span> <span class="k">=</span> <span class="n">toPlot</span> <span class="n">map</span> <span class="o">{</span> 
-    <span class="k">case</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">ent</span><span class="o">)</span> <span class="k">=&gt;</span>
-        <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="o">(</span><span class="mf">0.1</span> <span class="n">to</span> <span class="mf">1.0</span> <span class="n">by</span> <span class="n">step</span><span class="o">).</span><span class="n">toList</span>
-        <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">{</span><span class="n">xx</span> <span class="k">=&gt;</span>
-          <span class="n">ent</span><span class="o">.</span><span class="n">count</span><span class="o">(</span><span class="n">m</span> <span class="k">=&gt;</span> <span class="n">m</span> <span class="o">&gt;</span> <span class="n">xx</span> <span class="o">&amp;&amp;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="n">xx</span> <span class="o">+</span> <span class="n">step</span><span class="o">)</span>   
-        <span class="o">}</span>
-        <span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">name</span> <span class="k">=</span> <span class="n">name</span><span class="o">)</span>  
-<span class="o">}</span>
-
-<span class="n">plot</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">plot</span><span class="o">()</span>
-
-<span class="k">val</span> <span class="n">plot2</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span>
-    <span class="nc">Scatter</span><span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">epochs</span><span class="o">,</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">entangledScore</span><span class="o">),</span> <span class="n">name</span> <span class="k">=</span> <span class="s">&quot;entangled&quot;</span><span class="o">),</span>
-    <span class="nc">Scatter</span><span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">epochs</span><span class="o">,</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">originalScore</span><span class="o">),</span> <span class="n">name</span> <span class="k">=</span> <span class="s">&quot;original&quot;</span><span class="o">)</span>
-<span class="o">)</span>
-    
-<span class="n">plot2</span><span class="o">.</span><span class="n">plot</span><span class="o">()</span>
-
-<span class="k">val</span> <span class="n">entangledScore</span> <span class="k">=</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">entangledScore</span><span class="o">).</span><span class="n">sum</span> <span class="o">/</span> <span class="n">epochs</span>
-<span class="k">val</span> <span class="n">originalScore</span> <span class="k">=</span> <span class="n">reports</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">originalScore</span><span class="o">).</span><span class="n">sum</span> <span class="o">/</span> <span class="n">epochs</span>
-
-<span class="n">println</span><span class="o">(</span><span class="s">&quot;Average score:&quot;</span> <span class="o">+</span> <span class="n">entangledScore</span> <span class="o">+</span> <span class="s">&quot; compared to original &quot;</span> <span class="o">+</span> <span class="n">originalScore</span><span class="o">)</span>
 </pre></div>
 
 </div>
@@ -13931,92 +13820,7 @@ defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">a
 </div>
 
 <div class="output_area">
-<div class="prompt"></div>
-
-
-<div class="output_html rendered_html output_subarea ">
-<div class="chart" id="plot-381049847"></div>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-
-
-<div id="fe261526-6811-4541-a3b1-46c362e0d764"></div>
-<div class="output_subarea output_javascript ">
-<script type="text/javascript">
-var element = $('#fe261526-6811-4541-a3b1-46c362e0d764');
-requirejs(["plotly"], function(Plotly) {
-  (function () {
-  var data0 = {"type":"scatter","x":[0.1,0.11,0.12,0.13,0.14,0.15000000000000002,0.16000000000000003,0.17000000000000004,0.18000000000000005,0.19000000000000006,0.20000000000000007,0.21000000000000008,0.22000000000000008,0.2300000000000001,0.2400000000000001,0.2500000000000001,0.2600000000000001,0.27000000000000013,0.28000000000000014,0.29000000000000015,0.30000000000000016,0.31000000000000016,0.3200000000000002,0.3300000000000002,0.3400000000000002,0.3500000000000002,0.3600000000000002,0.3700000000000002,0.3800000000000002,0.39000000000000024,0.40000000000000024,0.41000000000000025,0.42000000000000026,0.43000000000000027,0.4400000000000003,0.4500000000000003,0.4600000000000003,0.4700000000000003,0.4800000000000003,0.4900000000000003,0.5000000000000003,0.5100000000000003,0.5200000000000004,0.5300000000000004,0.5400000000000004,0.5500000000000004,0.5600000000000004,0.5700000000000004,0.5800000000000004,0.5900000000000004,0.6000000000000004,0.6100000000000004,0.6200000000000004,0.6300000000000004,0.6400000000000005,0.6500000000000005,0.6600000000000005,0.6700000000000005,0.6800000000000005,0.6900000000000005,0.7000000000000005,0.7100000000000005,0.7200000000000005,0.7300000000000005,0.7400000000000005,0.7500000000000006,0.7600000000000006,0.7700000000000006,0.7800000000000006,0.7900000000000006,0.8000000000000006,0.8100000000000006,0.8200000000000006,0.8300000000000006,0.8400000000000006,0.8500000000000006,0.8600000000000007,0.8700000000000007,0.8800000000000007,0.8900000000000007,0.9000000000000007,0.9100000000000007,0.9200000000000007,0.9300000000000007,0.9400000000000007,0.9500000000000007,0.9600000000000007,0.9700000000000008,0.9800000000000008,0.9900000000000008,1.0000000000000007],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,57.0,66.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"name":"entangledLeft"};
-  var data1 = {"type":"scatter","x":[0.1,0.11,0.12,0.13,0.14,0.15000000000000002,0.16000000000000003,0.17000000000000004,0.18000000000000005,0.19000000000000006,0.20000000000000007,0.21000000000000008,0.22000000000000008,0.2300000000000001,0.2400000000000001,0.2500000000000001,0.2600000000000001,0.27000000000000013,0.28000000000000014,0.29000000000000015,0.30000000000000016,0.31000000000000016,0.3200000000000002,0.3300000000000002,0.3400000000000002,0.3500000000000002,0.3600000000000002,0.3700000000000002,0.3800000000000002,0.39000000000000024,0.40000000000000024,0.41000000000000025,0.42000000000000026,0.43000000000000027,0.4400000000000003,0.4500000000000003,0.4600000000000003,0.4700000000000003,0.4800000000000003,0.4900000000000003,0.5000000000000003,0.5100000000000003,0.5200000000000004,0.5300000000000004,0.5400000000000004,0.5500000000000004,0.5600000000000004,0.5700000000000004,0.5800000000000004,0.5900000000000004,0.6000000000000004,0.6100000000000004,0.6200000000000004,0.6300000000000004,0.6400000000000005,0.6500000000000005,0.6600000000000005,0.6700000000000005,0.6800000000000005,0.6900000000000005,0.7000000000000005,0.7100000000000005,0.7200000000000005,0.7300000000000005,0.7400000000000005,0.7500000000000006,0.7600000000000006,0.7700000000000006,0.7800000000000006,0.7900000000000006,0.8000000000000006,0.8100000000000006,0.8200000000000006,0.8300000000000006,0.8400000000000006,0.8500000000000006,0.8600000000000007,0.8700000000000007,0.8800000000000007,0.8900000000000007,0.9000000000000007,0.9100000000000007,0.9200000000000007,0.9300000000000007,0.9400000000000007,0.9500000000000007,0.9600000000000007,0.9700000000000008,0.9800000000000008,0.9900000000000008,1.0000000000000007],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.0,57.0,66.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"name":"originalLeft"};
-  var data2 = {"type":"scatter","x":[0.1,0.11,0.12,0.13,0.14,0.15000000000000002,0.16000000000000003,0.17000000000000004,0.18000000000000005,0.19000000000000006,0.20000000000000007,0.21000000000000008,0.22000000000000008,0.2300000000000001,0.2400000000000001,0.2500000000000001,0.2600000000000001,0.27000000000000013,0.28000000000000014,0.29000000000000015,0.30000000000000016,0.31000000000000016,0.3200000000000002,0.3300000000000002,0.3400000000000002,0.3500000000000002,0.3600000000000002,0.3700000000000002,0.3800000000000002,0.39000000000000024,0.40000000000000024,0.41000000000000025,0.42000000000000026,0.43000000000000027,0.4400000000000003,0.4500000000000003,0.4600000000000003,0.4700000000000003,0.4800000000000003,0.4900000000000003,0.5000000000000003,0.5100000000000003,0.5200000000000004,0.5300000000000004,0.5400000000000004,0.5500000000000004,0.5600000000000004,0.5700000000000004,0.5800000000000004,0.5900000000000004,0.6000000000000004,0.6100000000000004,0.6200000000000004,0.6300000000000004,0.6400000000000005,0.6500000000000005,0.6600000000000005,0.6700000000000005,0.6800000000000005,0.6900000000000005,0.7000000000000005,0.7100000000000005,0.7200000000000005,0.7300000000000005,0.7400000000000005,0.7500000000000006,0.7600000000000006,0.7700000000000006,0.7800000000000006,0.7900000000000006,0.8000000000000006,0.8100000000000006,0.8200000000000006,0.8300000000000006,0.8400000000000006,0.8500000000000006,0.8600000000000007,0.8700000000000007,0.8800000000000007,0.8900000000000007,0.9000000000000007,0.9100000000000007,0.9200000000000007,0.9300000000000007,0.9400000000000007,0.9500000000000007,0.9600000000000007,0.9700000000000008,0.9800000000000008,0.9900000000000008,1.0000000000000007],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,56.0,62.0,7.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"name":"entangledRight"};
-  var data3 = {"type":"scatter","x":[0.1,0.11,0.12,0.13,0.14,0.15000000000000002,0.16000000000000003,0.17000000000000004,0.18000000000000005,0.19000000000000006,0.20000000000000007,0.21000000000000008,0.22000000000000008,0.2300000000000001,0.2400000000000001,0.2500000000000001,0.2600000000000001,0.27000000000000013,0.28000000000000014,0.29000000000000015,0.30000000000000016,0.31000000000000016,0.3200000000000002,0.3300000000000002,0.3400000000000002,0.3500000000000002,0.3600000000000002,0.3700000000000002,0.3800000000000002,0.39000000000000024,0.40000000000000024,0.41000000000000025,0.42000000000000026,0.43000000000000027,0.4400000000000003,0.4500000000000003,0.4600000000000003,0.4700000000000003,0.4800000000000003,0.4900000000000003,0.5000000000000003,0.5100000000000003,0.5200000000000004,0.5300000000000004,0.5400000000000004,0.5500000000000004,0.5600000000000004,0.5700000000000004,0.5800000000000004,0.5900000000000004,0.6000000000000004,0.6100000000000004,0.6200000000000004,0.6300000000000004,0.6400000000000005,0.6500000000000005,0.6600000000000005,0.6700000000000005,0.6800000000000005,0.6900000000000005,0.7000000000000005,0.7100000000000005,0.7200000000000005,0.7300000000000005,0.7400000000000005,0.7500000000000006,0.7600000000000006,0.7700000000000006,0.7800000000000006,0.7900000000000006,0.8000000000000006,0.8100000000000006,0.8200000000000006,0.8300000000000006,0.8400000000000006,0.8500000000000006,0.8600000000000007,0.8700000000000007,0.8800000000000007,0.8900000000000007,0.9000000000000007,0.9100000000000007,0.9200000000000007,0.9300000000000007,0.9400000000000007,0.9500000000000007,0.9600000000000007,0.9700000000000008,0.9800000000000008,0.9900000000000008,1.0000000000000007],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,56.0,62.0,7.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"name":"originalRight"};
-
-  var data = [data0, data1, data2, data3];
-  var layout = {};
-
-  Plotly.plot('plot-381049847', data, layout);
-})();
-});
-      
-</script>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-<div class="output_html rendered_html output_subarea ">
-<div class="chart" id="plot-1730584006"></div>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-
-
-
-<div id="1a7ac87d-6e7b-4bbf-97e9-dff759937a7e"></div>
-<div class="output_subarea output_javascript ">
-<script type="text/javascript">
-var element = $('#1a7ac87d-6e7b-4bbf-97e9-dff759937a7e');
-requirejs(["plotly"], function(Plotly) {
-  (function () {
-  var data0 = {"type":"scatter","x":[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0,22.0,23.0,24.0,25.0,26.0,27.0,28.0,29.0,30.0,31.0,32.0,33.0,34.0,35.0,36.0,37.0,38.0,39.0,40.0,41.0,42.0,43.0,44.0,45.0,46.0,47.0,48.0,49.0,50.0,51.0,52.0,53.0,54.0,55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0,63.0,64.0,65.0,66.0,67.0,68.0,69.0,70.0,71.0,72.0,73.0,74.0,75.0,76.0,77.0,78.0,79.0,80.0,81.0,82.0,83.0,84.0,85.0,86.0,87.0,88.0,89.0,90.0,91.0,92.0,93.0,94.0,95.0,96.0,97.0,98.0,99.0,100.0,101.0,102.0,103.0,104.0,105.0,106.0,107.0,108.0,109.0,110.0,111.0,112.0,113.0,114.0,115.0,116.0,117.0,118.0,119.0,120.0,121.0,122.0,123.0,124.0,125.0,126.0,127.0,128.0],"y":[0.8362107127047366,0.8385347498893315,0.835436033643205,0.8352146967684816,0.834108012394865,0.8369853917662683,0.8355467020805666,0.8338866755201416,0.8346613545816733,0.8332226648959716,0.8387560867640549,0.8335546702080566,0.8408587870739265,0.8332226648959716,0.8243691899070386,0.8377600708277999,0.8300132802124834,0.8311199645861,0.8269145639663568,0.8417441345728198,0.83576803895529,0.830787959274015,0.8342186808322266,0.8301239486498451,0.8386454183266933,0.8285745905267817,0.83311199645861,0.8359893758300133,0.8416334661354582,0.830787959274015,0.8336653386454184,0.8271359008410801,0.8232625055334218,0.8306772908366534,0.8283532536520585,0.8326693227091634,0.832115980522355,0.833444001770695,0.8284639220894201,0.8322266489597167,0.8284639220894201,0.8299026117751217,0.8277999114652501,0.8401947764497565,0.8276892430278885,0.8310092961487384,0.8349933598937583,0.8284639220894201,0.8333333333333334,0.8342186808322266,0.8353253652058433,0.8284639220894201,0.8219344842850819,0.8349933598937583,0.8336653386454184,0.8303452855245684,0.83377600708278,0.8292386011509517,0.83311199645861,0.8286852589641435,0.8426294820717132,0.834108012394865,0.8372067286409915,0.8312306330234617,0.8326693227091634,0.8280212483399735,0.8289065958388667,0.8315626383355467,0.8383134130146083,0.8296812749003984,0.8420761398849048,0.8386454183266933,0.832779991146525,0.8308986277113767,0.8368747233289066,0.8346613545816733,0.8322266489597167,0.8352146967684816,0.8380920761398849,0.8285745905267817,0.8305666223992917,0.83311199645861,0.835436033643205,0.8299026117751217,0.835436033643205,0.8409694555112882,0.8284639220894201,0.8405267817618415,0.8366533864541833,0.8346613545816733,0.8353253652058433,0.8310092961487384,0.8405267817618415,0.8386454183266933,0.8294599380256751,0.8227091633466136,0.8318946436476317,0.8361000442673749,0.8348826914563966,0.8252545374059318,0.8312306330234617,0.8355467020805666,0.8387560867640549,0.8398627711376715,0.83244798583444,0.8352146967684816,0.8285745905267817,0.8281319167773351,0.8305666223992917,0.8361000442673749,0.83178397521027,0.8284639220894201,0.8378707392651615,0.8390880920761399,0.8308986277113767,0.8286852589641435,0.8299026117751217,0.8290172642762285,0.830787959274015,0.8364320495794599,0.8297919433377601,0.8343293492695883,0.8250332005312085,0.8349933598937583,0.8365427180168216,0.8299026117751217,0.8275785745905267,0.8303452855245684],"name":"entangled"};
-  var data1 = {"type":"scatter","x":[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0,19.0,20.0,21.0,22.0,23.0,24.0,25.0,26.0,27.0,28.0,29.0,30.0,31.0,32.0,33.0,34.0,35.0,36.0,37.0,38.0,39.0,40.0,41.0,42.0,43.0,44.0,45.0,46.0,47.0,48.0,49.0,50.0,51.0,52.0,53.0,54.0,55.0,56.0,57.0,58.0,59.0,60.0,61.0,62.0,63.0,64.0,65.0,66.0,67.0,68.0,69.0,70.0,71.0,72.0,73.0,74.0,75.0,76.0,77.0,78.0,79.0,80.0,81.0,82.0,83.0,84.0,85.0,86.0,87.0,88.0,89.0,90.0,91.0,92.0,93.0,94.0,95.0,96.0,97.0,98.0,99.0,100.0,101.0,102.0,103.0,104.0,105.0,106.0,107.0,108.0,109.0,110.0,111.0,112.0,113.0,114.0,115.0,116.0,117.0,118.0,119.0,120.0,121.0,122.0,123.0,124.0,125.0,126.0,127.0,128.0],"y":[0.7504426737494466,0.7537627268702966,0.7491146525011066,0.7547587428065515,0.7487826471890217,0.7587428065515714,0.7543160690571049,0.749667994687915,0.7507746790615316,0.751660026560425,0.7549800796812749,0.7507746790615316,0.7611775121735281,0.7470119521912351,0.7411465250110668,0.7508853474988934,0.749003984063745,0.7464586100044267,0.7414785303231518,0.7576361221779548,0.7505533421868084,0.7469012837538734,0.7505533421868084,0.7484506418769367,0.7542054006197433,0.7459052678176185,0.7482293050022134,0.7540947321823815,0.7550907481186365,0.7456839309428951,0.7535413899955733,0.7404825143868968,0.7410358565737052,0.7478972996901284,0.7435812306330235,0.7501106684373616,0.7461266046923417,0.75066401062417,0.7467906153165117,0.7504426737494466,0.7464586100044267,0.74734395750332,0.7482293050022134,0.7550907481186365,0.7470119521912351,0.7474546259406817,0.7557547587428065,0.7420318725099602,0.7532093846834883,0.7472332890659584,0.75132802124834,0.7442452412571935,0.7392651615759186,0.7550907481186365,0.7515493581230633,0.7502213368747234,0.7532093846834883,0.7455732625055335,0.7559760956175299,0.7435812306330235,0.7574147853032315,0.7507746790615316,0.7497786631252766,0.7470119521912351,0.7431385568835768,0.7408145196989818,0.7457945993802567,0.7428065515714918,0.7571934484285082,0.7461266046923417,0.7605135015493582,0.750332005312085,0.7534307215582116,0.7482293050022134,0.7475652943780434,0.75132802124834,0.7502213368747234,0.75,0.7536520584329349,0.7464586100044267,0.7445772465692785,0.748339973439575,0.7522133687472333,0.7461266046923417,0.7491146525011066,0.7548694112439133,0.7478972996901284,0.7567507746790615,0.7543160690571049,0.7502213368747234,0.7492253209384684,0.7504426737494466,0.7579681274900398,0.7517706949977866,0.747675962815405,0.7409251881363436,0.7533200531208499,0.7511066843736166,0.7554227534307215,0.7433598937583001,0.749667994687915,0.7488933156263834,0.7569721115537849,0.7547587428065515,0.7459052678176185,0.7522133687472333,0.7413678618857902,0.7443559096945551,0.7462372731297034,0.7497786631252766,0.7482293050022134,0.7465692784417884,0.75132802124834,0.7587428065515714,0.7422532093846835,0.7461266046923417,0.7470119521912351,0.7475652943780434,0.7494466578131916,0.7534307215582116,0.7498893315626384,0.7546480743691899,0.7440239043824701,0.7518813634351483,0.7466799468791501,0.7463479415670651,0.7413678618857902,0.7463479415670651],"name":"original"};
-
-  var data = [data0, data1];
-  var layout = {};
-
-  Plotly.plot('plot-1730584006', data, layout);
-})();
-});
-      
-</script>
-</div>
-
-</div>
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Average score:0.8329935466467464 compared to original 0.7494769187140329
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[14]:</div>
+<div class="prompt output_prompt">Out[1]:</div>
 
 
 
@@ -14026,69 +13830,248 @@ requirejs(["plotly"], function(Plotly) {
 </span>
 <span class="ansi-green-fg">import </span><span class="ansi-cyan-fg">plotly._
 </span>
-<span class="ansi-green-fg">import </span><span class="ansi-cyan-fg">plotly.element._
-</span>
-<span class="ansi-green-fg">import </span><span class="ansi-cyan-fg">plotly.layout._
-</span>
 <span class="ansi-green-fg">import </span><span class="ansi-cyan-fg">plotly.JupyterScala._
-
 </span>
-<span class="ansi-cyan-fg">epochs</span>: <span class="ansi-green-fg">Int</span> = <span class="ansi-green-fg">128</span>
-<span class="ansi-cyan-fg">reports</span>: <span class="ansi-green-fg">List</span>[<span class="ansi-green-fg">Report</span> forSome { type <span class="ansi-green-fg">Report</span> &lt;: <span class="ansi-green-fg">AnyRef</span> with <span class="ansi-green-fg">Product</span> with <span class="ansi-green-fg">Serializable</span>{val entangledE: (Double, Double);val originalE: (Double, Double);val entangledScore: Double;val originalScore: Double;def copy(entangledE: (Double, Double),originalE: (Double, Double),entangledScore: Double,originalScore: Double): Report;def copy$default$1: (Double, Double);def copy$default$2: (Double, Double);def copy$default$3: Double;def copy$default$4: Double} }] = <span class="ansi-yellow-fg">List</span>(
-  Report((0.5025453740593183,0.4953519256308101),(0.5025453740593183,0.4953519256308101),0.8362107127047366,0.7504426737494466),
-  Report((0.49922532093846833,0.4950199203187251),(0.49922532093846833,0.4950199203187251),0.8385347498893315,0.7537627268702966),
-  Report((0.49369189907038513,0.5073041168658698),(0.49369189907038513,0.5073041168658698),0.835436033643205,0.7491146525011066),
-  Report((0.4960159362549801,0.5044267374944665),(0.4960159362549801,0.5044267374944665),0.8352146967684816,0.7547587428065515),
-  Report((0.50066401062417,0.5022133687472333),(0.50066401062417,0.5022133687472333),0.834108012394865,0.7487826471890217),
-  Report((0.49424524125719344,0.49778663125276673),(0.49424524125719344,0.497786<span class="ansi-yellow-fg">...</span>
-<span class="ansi-cyan-fg">step</span>: <span class="ansi-green-fg">Double</span> = <span class="ansi-green-fg">0.01</span>
-<span class="ansi-cyan-fg">toPlot</span>: <span class="ansi-green-fg">Map</span>[<span class="ansi-green-fg">String</span>, <span class="ansi-green-fg">List</span>[<span class="ansi-green-fg">Double</span>]] = <span class="ansi-yellow-fg">Map</span>(
-  <span class="ansi-green-fg">&#34;entangledLeft&#34;</span> -&gt; <span class="ansi-yellow-fg">List</span>(
-    <span class="ansi-green-fg">0.5025453740593183</span>,
-    <span class="ansi-green-fg">0.49922532093846833</span>,
-    <span class="ansi-green-fg">0.49369189907038513</span>,
-    <span class="ansi-green-fg">0.4960159362549801</span>,
-    <span class="ansi-green-fg">0.50066401062417</span>,
-    <span class="ansi-green-fg">0.49424524125719344</span>,
-    <span class="ansi-green-fg">0.50066401062417</span>,
-    <span class="ansi-green-fg">0.5064187693669765</span>,
-    <span class="ansi-green-fg">0.4995573262505533</span>,
-    <span class="ansi-green-fg">0.5034307215582116</span>,
-<span class="ansi-yellow-fg">...</span>
-<span class="ansi-cyan-fg">plot</span>: <span class="ansi-green-fg">collection</span>.<span class="ansi-green-fg">immutable</span>.<span class="ansi-green-fg">Iterable</span>[<span class="ansi-green-fg">Scatter</span>] = <span class="ansi-yellow-fg">List</span>(
-  <span class="ansi-yellow-fg">Scatter</span>(
-    <span class="ansi-yellow-fg">Some</span>(
-      <span class="ansi-yellow-fg">Doubles</span>(
-        <span class="ansi-yellow-fg">List</span>(
-          <span class="ansi-green-fg">0.1</span>,
-          <span class="ansi-green-fg">0.11</span>,
-          <span class="ansi-green-fg">0.12</span>,
-          <span class="ansi-green-fg">0.13</span>,
-          <span class="ansi-green-fg">0.14</span>,
-          <span class="ansi-green-fg">0.15000000000000002</span>,
-          <span class="ansi-green-fg">0.16000000000000003</span>,
-<span class="ansi-yellow-fg">...</span>
-<span class="ansi-cyan-fg">res13_11</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-381049847&#34;</span>
-<span class="ansi-cyan-fg">plot2</span>: <span class="ansi-green-fg">List</span>[<span class="ansi-green-fg">Scatter</span>] = <span class="ansi-yellow-fg">List</span>(
-  <span class="ansi-yellow-fg">Scatter</span>(
-    <span class="ansi-yellow-fg">Some</span>(
-      <span class="ansi-yellow-fg">Doubles</span>(
-        <span class="ansi-yellow-fg">Vector</span>(
-          <span class="ansi-green-fg">1.0</span>,
-          <span class="ansi-green-fg">2.0</span>,
-          <span class="ansi-green-fg">3.0</span>,
-          <span class="ansi-green-fg">4.0</span>,
-          <span class="ansi-green-fg">5.0</span>,
-          <span class="ansi-green-fg">6.0</span>,
-          <span class="ansi-green-fg">7.0</span>,
-<span class="ansi-yellow-fg">...</span>
-<span class="ansi-cyan-fg">res13_13</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-1730584006&#34;</span>
-<span class="ansi-cyan-fg">entangledScore</span>: <span class="ansi-green-fg">Double</span> = <span class="ansi-green-fg">0.8329935466467464</span>
-<span class="ansi-cyan-fg">originalScore</span>: <span class="ansi-green-fg">Double</span> = <span class="ansi-green-fg">0.7494769187140329</span></pre>
+<span class="ansi-green-fg">import </span><span class="ansi-cyan-fg">scala.math._
+
+</span></pre>
 </div>
 
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>(Draft) TODO: equations and derivations</p>
+<p>Modeling "classic" vs "quantum" waves through pulse-width midulation</p>
+<p>This simulation shows that the only difference between classic (Werner) vs quantum (Bell) entnglement lies in digitalization, precisely in how integrals are measured. For the sake of simplicty Pilot-wave view is used and both "classic" (Werner) and "quantum" (Bell) pilot waves are modeled as pulses.</p>
+<p>Let's start with a regular sinal wave and encode the amount of energy (integral) in [0, Pi] part of the wave as a width of "1" (positive) pulse, while [Pi, 2*Pi] is a width of "0" (negative one).</p>
+<p>The naive approach (with continuous integrals) would give us something like this:</p>
+<p>1,1,1,1,1,0,0,0,0,0</p>
+<p>So the pulse is perfectly balanced. However, if we take into account fixed amount of measurements, there would be no way to compute (measure) integral precisely, thus providing:</p>
+<p>1,1,1,1,1,1,0,0,0,0</p>
+<p>Also unlike with classical deviations, the error would have to be described as sinus from a real number (not random) and can be modeled in a deterministic way. More importantly deviations would also depend on the phase of a wave we model, thus shifting a pulse wouldn't work.</p>
+<p>Surprisingly, the same thing is happening in a real world when we sample (let's say) sinusoidal alternating current through analog-digital converter.</p>
+<p>The simulation itself also shows that the conditions of reaching Tsirelson's bound are one-to-one corresponfing to conditions of reaching classic 3/4 bound. Simply saying if you randomly choose a sequence of angles to measure (between 0,pi/4,pi/2 3pi/4,pi,) and get 3/4 in classic case - the same sequence can be used to obtain ~0.85 for a quantum entnglement.</p>
+<p>The conclusion is that several popular assumptions are not necessary for quantum world, thus could be excluded through Occam Razor:</p>
+<ul>
+<li>Many world. Quantum uncertainty is not any different from classic one (like flipping a coin).</li>
+<li>Pure randomness. Bell's violations aren't caused by a random mistake or any other assumed, it's caused by imprecision of measurement. We can only say that underlying wave we measuring is as perfectly correlated as. The assumption about maximum precision (sampling frequency) still holds however.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-scala"><pre><span></span><span class="k">def</span> <span class="n">randomInt</span><span class="o">(</span><span class="n">mod</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">scala</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">Random</span><span class="o">.</span><span class="n">nextInt</span><span class="o">(</span><span class="n">mod</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">randoms</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">mod</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2</span><span class="o">)</span> <span class="k">=</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">n</span><span class="o">)(</span><span class="n">randomInt</span><span class="o">(</span><span class="n">mod</span><span class="o">))</span>
+
+<span class="k">def</span> <span class="n">wave</span><span class="o">(</span><span class="n">phase</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">timeRes</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">,</span> <span class="n">amplRes</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">10</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="o">(</span><span class="mi">0</span> <span class="n">to</span> <span class="n">timeRes</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).</span><span class="n">toList</span> <span class="n">flatMap</span> <span class="o">{</span> <span class="n">angle</span> <span class="k">=&gt;</span>
+     <span class="k">val</span> <span class="n">reangle</span> <span class="k">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">timeRes</span>
+     <span class="k">val</span> <span class="n">value</span> <span class="k">=</span> <span class="n">sin</span><span class="o">((</span><span class="n">reangle</span> <span class="o">-</span> <span class="n">phase</span><span class="o">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nc">Pi</span><span class="o">)</span> 
+     <span class="k">val</span> <span class="n">pulseWidth</span> <span class="k">=</span> <span class="o">(</span><span class="n">abs</span><span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="o">*</span> <span class="n">amplRes</span><span class="o">).</span><span class="n">toInt</span>
+     <span class="k">val</span> <span class="n">digit</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span><span class="mi">1</span> <span class="k">else</span> <span class="n">zero</span>
+     <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">pulseWidth</span><span class="o">)(</span><span class="n">digit</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//binary version</span>
+<span class="k">def</span> <span class="n">dwave</span><span class="o">(</span><span class="n">at</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">wave</span><span class="o">(</span><span class="n">at</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="mi">8</span><span class="o">,</span> <span class="n">zero</span> <span class="k">=</span> <span class="mi">0</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">at</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">at</span> <span class="k">match</span> <span class="o">{</span> <span class="c1">//rolls</span>
+    <span class="k">case</span> <span class="mi">0</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">1</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">2</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">3</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">4</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">5</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">6</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">)</span>
+    <span class="k">case</span> <span class="mi">7</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">0</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">def</span> <span class="n">correlate</span><span class="o">(</span><span class="n">left</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">right</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="o">(</span><span class="n">left</span> <span class="n">zip</span> <span class="n">right</span><span class="o">).</span><span class="n">map</span> <span class="o">{</span> 
+    <span class="k">case</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="o">)</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="o">}.</span><span class="n">sum</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">left</span><span class="o">.</span><span class="n">size</span>
+<span class="o">}</span>
+
+<span class="k">def</span> <span class="n">xor</span><span class="o">(</span><span class="n">l</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="o">)</span> <span class="n">zero</span> <span class="k">else</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="n">xors</span><span class="o">(</span><span class="n">ll</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">rr</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">ll</span> <span class="n">zip</span> <span class="n">rr</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">xor</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">,</span> <span class="n">zero</span><span class="o">))</span>
+
+
+
+<span class="k">object</span> <span class="nc">model</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">step</span> <span class="k">=</span> <span class="mf">0.01</span>
+  <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="o">(</span><span class="mf">0.0</span> <span class="n">to</span> <span class="mf">1.0</span> <span class="n">by</span> <span class="n">step</span><span class="o">).</span><span class="n">toList</span>
+  <span class="k">val</span> <span class="n">phi</span> <span class="k">=</span> <span class="mf">0.5</span>
+  <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">{</span><span class="n">xx</span> <span class="k">=&gt;</span> <span class="n">correlate</span><span class="o">(</span><span class="n">wave</span><span class="o">(</span><span class="n">phi</span> <span class="o">+</span> <span class="mi">0</span><span class="o">),</span> <span class="n">wave</span><span class="o">(</span><span class="n">phi</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">xx</span><span class="o">))}</span>
+  <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">xx</span> <span class="k">=&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">xx</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="o">)</span> <span class="n">xx</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">xx</span><span class="o">)</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">show</span><span class="o">()</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">z</span><span class="o">)).</span><span class="n">plot</span><span class="o">()</span>
+<span class="o">}</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+<div class="output_html rendered_html output_subarea ">
+<div class="chart" id="plot-2142127027"></div>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+
+<div id="41349856-f09f-46a9-b977-efd2f12b7c47"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#41349856-f09f-46a9-b977-efd2f12b7c47');
+requirejs(["plotly"], function(Plotly) {
+  (function () {
+  var data0 = {"type":"scatter","x":[0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-1.0,-0.9965588437715073,-0.9896765313145217,-0.9772883688919477,-0.9621472814865795,-0.9415003441156229,-0.9174122505161735,-0.8898830006882312,-0.8575361321403991,-0.8231245698554714,-0.7832071576049553,-0.741913282863042,-0.6958017894012388,-0.64762560220234,-0.5973847212663455,-0.5423262216104611,-0.48726772195457674,-0.43083275980729524,-0.36889194769442535,-0.3069511355815554,-0.24501032346868548,-0.18306951135581556,-0.12112869924294563,-0.05918788713007571,0.0034411562284927736,0.0653819683413627,0.12732278045423262,0.18926359256710254,0.25120440467997246,0.3131452167928424,0.3750860289057123,0.43702684101858225,0.4927735719201652,0.5478320715760495,0.6028905712319339,0.6524432209222298,0.7006194081211287,0.7460426703372333,0.7873365450791466,0.8265657260839642,0.860977288368892,0.8926359256710255,0.9201651754989677,0.9435650378527185,0.9642119752236752,0.9786648313833448,0.9903647625602202,0.9972470750172058,1.0,1.0,1.0,0.9965588437715073,0.9896765313145217,0.9772883688919477,0.9621472814865795,0.9415003441156229,0.9174122505161735,0.8898830006882312,0.8575361321403991,0.8231245698554714,0.7832071576049553,0.741913282863042,0.6958017894012388,0.64762560220234,0.5973847212663455,0.5423262216104611,0.48726772195457674,0.43083275980729524,0.36889194769442535,0.3069511355815554,0.24501032346868548,0.18306951135581556,0.12112869924294563,0.05918788713007571,-0.0034411562284927736,-0.0653819683413627,-0.12732278045423262,-0.18926359256710254,-0.25120440467997246,-0.3131452167928424,-0.3750860289057123,-0.43702684101858225,-0.4927735719201652,-0.5478320715760495,-0.6028905712319339,-0.6524432209222298,-0.7006194081211287,-0.7460426703372333,-0.7873365450791466,-0.8265657260839642,-0.860977288368892,-0.8926359256710255,-0.9201651754989677,-0.9435650378527185,-0.9642119752236752,-0.9786648313833448,-0.9903647625602202,-0.9972470750172058,-1.0,-1.0]};
+  var data1 = {"type":"scatter","x":[0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-0.96,-0.92,-0.88,-0.84,-0.8,-0.76,-0.72,-0.6799999999999999,-0.64,-0.6000000000000001,-0.56,-0.52,-0.4800000000000001,-0.44000000000000006,-0.4,-0.36,-0.31999999999999995,-0.2799999999999999,-0.23999999999999988,-0.19999999999999984,-0.1599999999999998,-0.11999999999999977,-0.07999999999999974,-0.0399999999999997,2.220446049250313E-16,0.04000000000000026,0.0800000000000003,0.12000000000000033,0.16000000000000036,0.2000000000000004,0.24000000000000044,0.28000000000000047,0.3200000000000005,0.36000000000000054,0.4000000000000006,0.4400000000000006,0.48000000000000065,0.5200000000000007,0.5600000000000007,0.6000000000000008,0.6400000000000008,0.6800000000000008,0.7200000000000009,0.7600000000000009,0.8000000000000009,0.840000000000001,0.880000000000001,0.920000000000001,0.9600000000000011,0.9999999999999991,0.9599999999999991,0.919999999999999,0.879999999999999,0.839999999999999,0.7999999999999989,0.7599999999999989,0.7199999999999989,0.6799999999999988,0.6399999999999988,0.5999999999999988,0.5599999999999987,0.5199999999999987,0.47999999999999865,0.4399999999999986,0.3999999999999986,0.35999999999999854,0.3199999999999985,0.2799999999999985,0.23999999999999844,0.1999999999999984,0.15999999999999837,0.11999999999999833,0.0799999999999983,0.03999999999999826,-1.7763568394002505E-15,-0.04000000000000181,-0.08000000000000185,-0.12000000000000188,-0.16000000000000192,-0.20000000000000195,-0.240000000000002,-0.280000000000002,-0.32000000000000206,-0.3600000000000021,-0.40000000000000213,-0.44000000000000217,-0.4800000000000022,-0.5200000000000022,-0.5600000000000023,-0.6000000000000023,-0.6400000000000023,-0.6800000000000024,-0.7200000000000024,-0.7600000000000025,-0.8000000000000025,-0.8400000000000025,-0.8800000000000026,-0.9200000000000026,-0.9600000000000026,-1.0000000000000027]};
+
+  var data = [data0, data1];
+  var layout = {};
+
+  Plotly.plot('plot-2142127027', data, layout);
+})();
+});
+      
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[30]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">randomInt</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">randoms</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">wave</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">dwave</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">classicWave</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">correlate</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">xor</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">xors</span>
+defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">model</span>
+<span class="ansi-cyan-fg">res29_9</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-2142127027&#34;</span></pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-scala"><pre><span></span><span class="k">object</span> <span class="nc">simulation</span> <span class="o">{</span>
+  
+
+  <span class="k">val</span> <span class="n">setupl</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span> <span class="c1">//0011 -&gt; 0235</span>
+  <span class="k">val</span> <span class="n">setupr</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">7</span><span class="o">)</span> <span class="c1">//1001 -&gt; 1247</span>
+
+
+  <span class="k">def</span> <span class="n">bell</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">N</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">size</span>
+      <span class="k">val</span> <span class="n">ab</span> <span class="k">=</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span>
+      <span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+      <span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+
+      <span class="o">(</span><span class="n">xors</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="n">zip</span> <span class="n">ab</span><span class="o">).</span><span class="n">count</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">ab</span><span class="o">.</span><span class="n">size</span>
+  <span class="o">}</span>
+    
+  <span class="k">def</span> <span class="n">bellClassic</span> <span class="k">=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">N</span> <span class="k">=</span> <span class="n">classicWave</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">size</span>
+      <span class="k">val</span> <span class="n">ab</span> <span class="k">=</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span>
+      <span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+      <span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">classicWave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
+
+      <span class="o">(</span><span class="n">xors</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="n">zip</span> <span class="n">ab</span><span class="o">).</span><span class="n">count</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">ab</span><span class="o">.</span><span class="n">size</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;bell=&quot;</span> <span class="o">+</span> <span class="n">simulation</span><span class="o">.</span><span class="n">bell</span><span class="o">)</span>
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;bellClassic=&quot;</span> <span class="o">+</span> <span class="n">simulation</span><span class="o">.</span><span class="n">bellClassic</span><span class="o">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>bell=0.8611493461803166
+bellClassic=0.75
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[31]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">simulation</span></pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-scala"><pre><span></span>
+</pre></div>
+
+</div>
 </div>
 </div>
 

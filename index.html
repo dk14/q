@@ -13850,18 +13850,10 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>(Draft) TODO: equations and derivations</p>
 <p>Modeling "classic" vs "quantum" waves through pulse-width midulation</p>
-<p>This simulation shows that the only difference between classic (Werner) vs quantum (Bell) entnglement lies in digitalization, precisely in how integrals are measured. For the sake of simplicty Pilot-wave view is used and both "classic" (Werner) and "quantum" (Bell) pilot waves are modeled as pulses.</p>
-<p>Let's start with a regular sinal wave and encode the amount of energy (integral) in [0, Pi] part of the wave as a width of "1" (positive) pulse, while [Pi, 2*Pi] is a width of "0" (negative one).</p>
-<p>The naive approach (with continuous integrals) would give us something like this:</p>
-<p>1,1,1,1,1,0,0,0,0,0</p>
-<p>So the pulse is perfectly balanced. However, if we take into account fixed amount of measurements, there would be no way to compute (measure) integral precisely, thus providing:</p>
-<p>1,1,1,1,1,1,0,0,0,0</p>
-<p>Also unlike with classical deviations, the error would have to be described as sinus from a real number (not random) and can be modeled in a deterministic way. More importantly deviations would also depend on the phase of a wave we model, thus shifting a pulse wouldn't work.</p>
-<p>Surprisingly, the same thing is happening in a real world when we sample (let's say) sinusoidal alternating current through analog-digital converter.</p>
-<p>The simulation itself also shows that the conditions of reaching Tsirelson's bound are one-to-one corresponfing to conditions of reaching classic 3/4 bound. Simply saying if you randomly choose a sequence of angles to measure (between 0,pi/4,pi/2 3pi/4,pi,) and get 3/4 in classic case - the same sequence can be used to obtain ~0.85 for a quantum entnglement.</p>
+<p>This simulation shows that the only difference between classic (Werner) vs quantum (Bell) entnglement lies in dependency between angle and phase of the photons measured. Both "classic" (Werner) and "quantum" (Bell) pilot waves are modeled as pulses.</p>
 <p>The conclusion is that several popular assumptions are not necessary for quantum world, thus could be excluded through Occam Razor:</p>
 <ul>
-<li>Many world. Quantum uncertainty is not any different from classic one (like flipping a coin).</li>
+<li>Many world. Quantum uncertainty is not any different from classic one (like flipping a coin). Also, this model introduces zero uncertainty.</li>
 <li>Pure randomness. Bell's violations aren't caused by a random mistake or any other assumed, it's caused by imprecision of measurement. We can only say that underlying wave we measuring is as perfectly correlated as. The assumption about maximum precision (sampling frequency) still holds however.</li>
 </ul>
 

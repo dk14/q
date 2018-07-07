@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>qQqQq</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>pwm-q</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -13771,11 +13771,12 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This model shows that measurements over entangled particles can be modeled using an immutable (non-communicating) deterministic (zero-randomness) wave, and still violate Bell's inequalities.</p>
-<p>The measurements can be obtained independently on any two (or more) computers and still show the correlations predicted by quantum mechanics; given that the choice of the "detector's angle" is as semi-independent as in real Bell's experiments - ortho vs diag is random but actual angle is "carefully" chosen.</p>
-<p>In this model the goup of particles carries no information (it's just a pulse of "1111100000"), but can be easily modified to carry any random/non-random info. The only difference from classic approach is the way the "phase" of the wave changes (see <code>waveQuantum(...)</code>). It's also noticable that while decreasing the resolution (small impulse lenth) the bound "degrades" from tsirelson's ~85% (resolution &gt; 2) to =100% (resolution = 2) and then to classic 75% (resolution = 1) covering all possible cases with zero randomness.</p>
-<p>Thus the observed "randomness" in two-split experiment has to come from the entropy of a source of photons/electrons/etc (like atom ot other particle for instance). Consequently only that randomness has to be explained - many-world assumtion (and other interpretations) doesn't relate to the measurement per se, but might explain how any energy provides us with high informational entropy source anyways (the guess is - it might be related to the way light converts to matter and vice versa).</p>
-<p>It's also hypotesized that those particles behaving exactly as particles - they dynamic haracteristics (like speed) however could be analized(!) as waves (or wavelets). Assuming plank-time as a "true" bound on discretization rate, we only limited in how to interpret the results (Heisenberg uncertainity), but only in exactly(!) the same way as it happens in digital signal processing - the infinite wave is just an (often illuding) convinience that allows us to represent groups of particles with a simillar behavioural pattern. It cannot provide (or prove/disprove) any "non-local" statistical dependency other than correlation.</p>
+<p>Pseudo-quantum bell-state modeling using Pulse-Width Modulation.</p>
+<p>This modeling allows to independently model two Bell-entangled "particles" (signal) for cases where correlation is calculated on coincidence basis (like CHSH), assuming that parts of the signal are "ummeasurable" even in theory. There is no shared state between two signals as the whole model is purely functional (immutable data), thus measurements can be run on different computers and still correlate as <code>sin(abs(angle1 - angle2))</code>.</p>
+<p>It can be further generalized to other inequalities (like CH-E) given that the "no-detection" case is excluded from statistics (as it doesn't cary any information per se). This includes Double-split experiment, where abscence of signal (for a while, on any or both sides) doesn't affect a resulting pattern (it just emerges slower) - all we see are "coincidences". It is also postulated that in general there is no way to timestamp a particle with maximum precision (due to quantification of time) even with a perfect Plank-time clock (due to relativity of simultanity + uncertanity of the tick), thus every experiment is coincidence-based one way or another.</p>
+<p>The modeling is completely deterministic, no underlying randomness is assumed in the signal. The measurement is represented as a simple linear delay (or rotation) - unlike with "coincidence loophole", this delay is [modeled as being] created by dispersion in the detector thus it doesn't introduce any hidden parameters and persists over any "measurement window" fixed or not. The signal is formed through a pulse-width modulation for every "probabilistic amplitude" (<code>sin(w)</code>), which allowed deterministic representation but conserved wave-like properties inside a finite period of time (thus energy is finite and measurable without "collapses"). It worth noting that a simple "00001111"-like pulse could be used to model Werner state and linear correlations.</p>
+<p>Heisenberg uncertainity could be applied through Fourier/Wavelet transform of the pulse-signal (pwm-wave) modeled as it has fixed dicretisation rate (<code>timeRes * amplRes</code>) - there is no need to be uncertain (!) when measuring a whole particle.</p>
+<p>So, "particles are particles" thus they get disperced as particles, but as any signal in DSP (Digital Signal Processing) they could be analized/represented as just waves or wavelets (but not necessarily probabilistic ones). The "randomness" in actual results is presumed to be either a result of other cases of dispersion (like anomalous "pseudo-time-travelling" one for the sake of transactional interpretation) or just due to [statistically] insignificant undersampling.</p>
 
 </div>
 </div>
@@ -13785,7 +13786,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-scala"><pre><span></span><span class="k">import</span> <span class="nn">$ivy.</span><span class="n">`org.plotly-scala::plotly-jupyter-scala:0.3.0`</span>
+<div class=" highlight hl-scala"><pre><span></span><span class="c1">//necessary preparations</span>
+<span class="k">import</span> <span class="nn">$ivy.</span><span class="n">`org.plotly-scala::plotly-jupyter-scala:0.3.0`</span>
 
 <span class="k">import</span> <span class="nn">plotly._</span>
 <span class="k">import</span> <span class="nn">plotly.JupyterScala._</span>
@@ -13857,65 +13859,259 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[172]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-scala"><pre><span></span><span class="k">def</span> <span class="n">rotate</span><span class="o">(</span><span class="n">l</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">angle</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="c1">//rolls</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">l</span><span class="o">.</span><span class="n">takeRight</span><span class="o">(</span><span class="n">angle</span><span class="o">)</span> <span class="o">++</span> <span class="n">l</span><span class="o">.</span><span class="n">take</span><span class="o">(</span><span class="n">l</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">angle</span><span class="o">)</span>
     <span class="k">else</span> <span class="n">l</span><span class="o">.</span><span class="n">drop</span><span class="o">(-</span><span class="n">angle</span><span class="o">)</span> <span class="o">++</span> <span class="n">l</span><span class="o">.</span><span class="n">take</span><span class="o">(-</span><span class="n">angle</span><span class="o">)</span>
 
-<span class="c1">//zero-phase wave represented as a pulse</span>
-<span class="k">def</span> <span class="n">protoWave</span><span class="o">(</span><span class="n">resolution</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> 
-  <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">resolution</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">resolution</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)(</span><span class="n">zero</span><span class="o">)</span>
-
-<span class="c1">//pulseWave</span>
-<span class="k">def</span> <span class="n">pulseWave</span><span class="o">(</span><span class="n">phase</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">resolution</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> 
-  <span class="n">rotate</span><span class="o">(</span><span class="n">protoWave</span><span class="o">(</span><span class="n">resolution</span><span class="o">,</span> <span class="n">zero</span><span class="o">),</span> <span class="o">(</span><span class="n">phase</span> <span class="o">*</span> <span class="n">resolution</span><span class="o">).</span><span class="n">toInt</span><span class="o">)</span>
-
-
-<span class="k">def</span> <span class="n">waveQuantum</span><span class="o">(</span><span class="n">phase</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">resolution</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="c1">//Bell</span>
-  <span class="n">pulseWave</span><span class="o">(</span><span class="n">cos</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nc">Pi</span> <span class="o">*</span> <span class="n">phase</span><span class="o">)/</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">,</span> <span class="n">resolution</span><span class="o">,</span> <span class="n">zero</span><span class="o">)</span>
-
-
-<span class="k">def</span> <span class="n">waveClassic</span><span class="o">(</span><span class="n">phase</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">resolution</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1024</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="c1">//Werner</span>
-  <span class="n">pulseWave</span><span class="o">(</span><span class="n">phase</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">,</span> <span class="n">resolution</span><span class="o">,</span> <span class="n">zero</span><span class="o">)</span>
-
-<span class="c1">//binary version</span>
-<span class="k">def</span> <span class="n">dwaveQuantum</span><span class="o">(</span><span class="n">at</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">waveQuantum</span><span class="o">(</span><span class="n">at</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="mi">8</span><span class="o">,</span> <span class="n">zero</span> <span class="k">=</span> <span class="mi">0</span><span class="o">)</span>
-
-<span class="k">def</span> <span class="n">dwaveClassic</span><span class="o">(</span><span class="n">at</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">waveClassic</span><span class="o">(</span><span class="n">at</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="mi">8</span><span class="o">,</span> <span class="n">zero</span> <span class="k">=</span> <span class="mi">0</span><span class="o">)</span>
-
-<span class="k">def</span> <span class="n">correlate</span><span class="o">(</span><span class="n">left</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">right</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-  <span class="o">(</span><span class="n">left</span> <span class="n">zip</span> <span class="n">right</span><span class="o">).</span><span class="n">map</span> <span class="o">{</span> 
-    <span class="k">case</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="o">)</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
-  <span class="o">}.</span><span class="n">sum</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">left</span><span class="o">.</span><span class="n">size</span>
+<span class="c1">//generates impulse wave containing +1/-1 values for Up/Down and 0 for nothing</span>
+<span class="k">def</span> <span class="n">pwmwave</span><span class="o">(</span><span class="n">phase</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">timeRes</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">100</span><span class="o">,</span> <span class="n">amplRes</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">100</span><span class="o">,</span> <span class="n">repeats</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">10</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">wave</span> <span class="k">=</span> <span class="o">(</span><span class="mi">0</span> <span class="n">to</span> <span class="n">timeRes</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).</span><span class="n">toList</span> <span class="n">flatMap</span> <span class="o">{</span> <span class="n">angle</span> <span class="k">=&gt;</span>
+     <span class="k">val</span> <span class="n">value</span> <span class="k">=</span> <span class="n">sin</span><span class="o">(</span><span class="n">angle</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nc">Pi</span> <span class="o">/</span> <span class="n">timeRes</span><span class="o">)</span>
+     <span class="k">val</span> <span class="n">pulseWidth</span> <span class="k">=</span> <span class="o">(</span><span class="n">abs</span><span class="o">(</span><span class="n">value</span><span class="o">)</span> <span class="o">*</span> <span class="n">amplRes</span><span class="o">).</span><span class="n">toInt</span>
+     <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">pulseWidth</span><span class="o">)(</span><span class="n">signum</span><span class="o">(</span><span class="n">value</span><span class="o">).</span><span class="n">toInt</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">amplRes</span> <span class="o">-</span> <span class="n">pulseWidth</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span>
+     <span class="c1">//List(pulseWidth)</span>
+  <span class="o">}</span>
+    
+  <span class="k">val</span> <span class="n">length</span> <span class="k">=</span> <span class="n">timeRes</span> <span class="o">*</span> <span class="n">amplRes</span>
+  <span class="k">val</span> <span class="n">phaseShift</span> <span class="k">=</span> <span class="n">phase</span> <span class="o">*</span> <span class="n">length</span>
+  <span class="k">val</span> <span class="n">shifted</span> <span class="k">=</span> <span class="n">rotate</span><span class="o">(</span><span class="n">wave</span><span class="o">,</span> <span class="n">phaseShift</span><span class="o">.</span><span class="n">toInt</span> <span class="o">%</span> <span class="n">length</span><span class="o">)</span>
+  <span class="o">(</span><span class="mi">1</span> <span class="n">to</span> <span class="n">repeats</span><span class="o">).</span><span class="n">toList</span> <span class="n">flatMap</span> <span class="o">(</span><span class="k">_</span> <span class="k">=&gt;</span> <span class="n">shifted</span><span class="o">)</span>
 <span class="o">}</span>
 
-<span class="k">def</span> <span class="n">xor</span><span class="o">(</span><span class="n">l</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="o">)</span> <span class="n">zero</span> <span class="k">else</span> <span class="mi">1</span>
+<span class="c1">//this excludes data with 0 on EITHER side</span>
+<span class="k">def</span> <span class="n">correlateCoincidences</span><span class="o">(</span><span class="n">left</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">right</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">coincidences</span> <span class="k">=</span> <span class="o">(</span><span class="n">left</span> <span class="n">zip</span> <span class="n">right</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">filter</span><span class="o">(</span><span class="mi">0</span><span class="o">!=)</span>
+  <span class="n">coincidences</span><span class="o">.</span><span class="n">sum</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">size</span>
+<span class="o">}</span>
 
-<span class="k">def</span> <span class="n">xors</span><span class="o">(</span><span class="n">ll</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">rr</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">zero</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">ll</span> <span class="n">zip</span> <span class="n">rr</span><span class="o">).</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">xor</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">,</span> <span class="n">zero</span><span class="o">))</span>
-
+<span class="c1">//this excludes only data with 0 on BOTH sides</span>
+<span class="k">def</span> <span class="n">correlateIncludingSemicoincidences</span><span class="o">(</span><span class="n">left</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">right</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">coincidences</span> <span class="k">=</span> <span class="o">(</span><span class="n">left</span> <span class="n">zip</span> <span class="n">right</span><span class="o">).</span><span class="n">flatMap</span> <span class="o">{</span> 
+    <span class="c1">//no-detection</span>
+    <span class="k">case</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">None</span>
+    <span class="c1">//semi-coincidence</span>
+    <span class="k">case</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">x</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+    <span class="k">case</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+    <span class="c1">//coincidence</span>
+    <span class="k">case</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="o">)</span> <span class="c1">//compare signs</span>
+    
+  <span class="o">}</span>
+  <span class="n">coincidences</span><span class="o">.</span><span class="n">sum</span><span class="o">.</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">coincidences</span><span class="o">.</span><span class="n">size</span>
+<span class="o">}</span>
 
 <span class="k">object</span> <span class="nc">model</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">step</span> <span class="k">=</span> <span class="mf">0.01</span>
-  <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="o">(</span><span class="mf">0.0</span> <span class="n">to</span> <span class="mf">1.0</span> <span class="n">by</span> <span class="n">step</span><span class="o">).</span><span class="n">toList</span>
-  <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">{</span><span class="n">xx</span> <span class="k">=&gt;</span> <span class="n">correlate</span><span class="o">(</span><span class="n">waveQuantum</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">waveQuantum</span><span class="o">(</span><span class="n">xx</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">))}</span>
-  <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">xx</span> <span class="k">=&gt;</span> <span class="n">correlate</span><span class="o">(</span><span class="n">waveClassic</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">waveClassic</span><span class="o">(</span><span class="n">xx</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">)))</span>
+  <span class="k">val</span> <span class="n">ground</span> <span class="k">=</span> <span class="mf">0.0</span> <span class="c1">//allows easily check dependency avoid random sampling</span>
+  <span class="k">val</span> <span class="n">angle</span> <span class="k">=</span> <span class="o">(-</span><span class="n">ground</span> <span class="n">to</span> <span class="o">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">ground</span><span class="o">)</span> <span class="n">by</span> <span class="n">step</span><span class="o">).</span><span class="n">toList</span>
+  <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">angle</span> <span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> 
+      <span class="n">correlateCoincidences</span><span class="o">(</span><span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="mf">0.0</span><span class="o">),</span> <span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">))}</span>
+  <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="n">angle</span> <span class="n">map</span> <span class="o">{</span> <span class="n">x</span> <span class="k">=&gt;</span> 
+    <span class="n">correlateIncludingSemicoincidences</span><span class="o">(</span><span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="mf">0.0</span><span class="o">),</span> <span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">))</span>
+  <span class="o">}</span>
 
-  <span class="k">def</span> <span class="n">show</span><span class="o">()</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">z</span><span class="o">)).</span><span class="n">plot</span><span class="o">()</span>
+  <span class="k">def</span> <span class="n">show</span><span class="o">()</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Scatter</span><span class="o">(</span><span class="n">angle</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="nc">Scatter</span><span class="o">(</span><span class="n">angle</span><span class="o">,</span> <span class="n">z</span><span class="o">)).</span><span class="n">plot</span><span class="o">()</span>
 <span class="o">}</span>
-<span class="c1">//println(dwave2(4))</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;Dependency of correlation from the angle _between_ detectors&quot;</span><span class="o">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Dependency of correlation from the angle _between_ detectors
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+<div class="output_html rendered_html output_subarea ">
+<div class="chart" id="plot-1472257601"></div>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+
+<div id="ff36bd74-0bb8-44ab-a6a3-440f765048b7"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#ff36bd74-0bb8-44ab-a6a3-440f765048b7');
+requirejs(["plotly"], function(Plotly) {
+  (function () {
+  var data0 = {"type":"scatter","x":[-0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-1.0,-0.9959473150962512,-0.9916317991631799,-0.982740021574973,-0.9732739420935412,-0.9586840091813313,-0.9431728492501973,-0.9220146222583265,-0.899581589958159,-0.8709677419354839,-0.8407079646017699,-0.8039927404718693,-0.7653631284916201,-0.72,-0.672514619883041,-0.6184798807749627,-0.5623100303951368,-0.5007720020586721,-0.4372384937238494,-0.3693121693121693,-0.29978586723768735,-0.22653721682847897,-0.15217391304347827,-0.07625272331154684,0.0,0.07625272331154684,0.15217391304347827,0.22653721682847897,0.29978586723768735,0.3693121693121693,0.4372384937238494,0.5007720020586721,0.5623100303951368,0.6184798807749627,0.672514619883041,0.72,0.7653631284916201,0.8039927404718693,0.8407079646017699,0.8709677419354839,0.899581589958159,0.9220146222583265,0.9431728492501973,0.9586840091813313,0.9732739420935412,0.982740021574973,0.9916317991631799,0.9959473150962512,1.0,1.0,1.0,0.9959473150962512,0.9916317991631799,0.982740021574973,0.9732739420935412,0.9586840091813313,0.9431728492501973,0.9220146222583265,0.899581589958159,0.8709677419354839,0.8407079646017699,0.8039927404718693,0.7653631284916201,0.72,0.672514619883041,0.6184798807749627,0.5623100303951368,0.5007720020586721,0.4372384937238494,0.3693121693121693,0.29978586723768735,0.22653721682847897,0.15217391304347827,0.07625272331154684,0.0,-0.07625272331154684,-0.15217391304347827,-0.22653721682847897,-0.29978586723768735,-0.3693121693121693,-0.4372384937238494,-0.5007720020586721,-0.5623100303951368,-0.6184798807749627,-0.672514619883041,-0.72,-0.7653631284916201,-0.8039927404718693,-0.8407079646017699,-0.8709677419354839,-0.899581589958159,-0.9220146222583265,-0.9431728492501973,-0.9586840091813313,-0.9732739420935412,-0.982740021574973,-0.9916317991631799,-0.9959473150962512,-1.0,-1.0]};
+  var data1 = {"type":"scatter","x":[-0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-0.9385371850030731,-0.8810875410815656,-0.8267441860465117,-0.7748795009923448,-0.7255118981737687,-0.6783974011911207,-0.6332803391626921,-0.5902236089443578,-0.5487493619193466,-0.5084107456690936,-0.46936758893280633,-0.4317738791423002,-0.3951923076923077,-0.3593155893536122,-0.3242481203007519,-0.28987194412107103,-0.2561144439317028,-0.22290950744558993,-0.19017288444040037,-0.15799004074241738,-0.12612612612612611,-0.09429726088908846,-0.06266786034019696,-0.03130590339892665,0.0,0.03130590339892665,0.06266786034019696,0.09429726088908846,0.12612612612612611,0.15799004074241738,0.19017288444040037,0.22290950744558993,0.2561144439317028,0.28987194412107103,0.3242481203007519,0.3593155893536122,0.3951923076923077,0.4317738791423002,0.46936758893280633,0.5084107456690936,0.5487493619193466,0.5902236089443578,0.6332803391626921,0.6783974011911207,0.7255118981737687,0.7748795009923448,0.8267441860465117,0.8810875410815656,0.9385371850030731,1.0,0.9385371850030731,0.8810875410815656,0.8267441860465117,0.7748795009923448,0.7255118981737687,0.6783974011911207,0.6332803391626921,0.5902236089443578,0.5487493619193466,0.5084107456690936,0.46936758893280633,0.4317738791423002,0.3951923076923077,0.3593155893536122,0.3242481203007519,0.28987194412107103,0.2561144439317028,0.22290950744558993,0.19017288444040037,0.15799004074241738,0.12612612612612611,0.09429726088908846,0.06266786034019696,0.03130590339892665,0.0,-0.03130590339892665,-0.06266786034019696,-0.09429726088908846,-0.12612612612612611,-0.15799004074241738,-0.19017288444040037,-0.22290950744558993,-0.2561144439317028,-0.28987194412107103,-0.3242481203007519,-0.3593155893536122,-0.3951923076923077,-0.4317738791423002,-0.46936758893280633,-0.5084107456690936,-0.5487493619193466,-0.5902236089443578,-0.6332803391626921,-0.6783974011911207,-0.7255118981737687,-0.7748795009923448,-0.8267441860465117,-0.8810875410815656,-0.9385371850030731,-1.0]};
+
+  var data = [data0, data1];
+  var layout = {};
+
+  Plotly.plot('plot-1472257601', data, layout);
+})();
+});
+      
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[172]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">rotate</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">pwmwave</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">correlateCoincidences</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">correlateIncludingSemicoincidences</span>
+defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">model</span>
+<span class="ansi-cyan-fg">res171_6</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-1472257601&#34;</span></pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[168]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-scala"><pre><span></span><span class="k">object</span> <span class="nc">experiment</span> <span class="o">{</span>
+
+  <span class="c1">//no random choice needed, as there is no state inside detector/signal</span>
+ 
+  <span class="k">def</span> <span class="n">chsh</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="mf">0.0</span>  <span class="c1">//0</span>
+    <span class="k">val</span> <span class="n">a_</span> <span class="k">=</span> <span class="mf">0.125</span><span class="c1">//0.125 </span>
+    <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="mf">0.0625</span><span class="c1">//0.0625</span>
+    <span class="k">val</span> <span class="n">b_</span> <span class="k">=</span> <span class="mf">0.1875</span><span class="c1">//0.1875 </span>
+    <span class="k">def</span> <span class="n">E</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">correlateChsh</span><span class="o">(</span><span class="n">pwmwave</span><span class="o">(</span><span class="n">a</span><span class="o">),</span> <span class="n">pwmwave</span><span class="o">(</span><span class="n">b</span><span class="o">))</span>
+    <span class="n">E</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">+</span> <span class="n">E</span><span class="o">(</span><span class="n">a_</span><span class="o">,</span> <span class="n">b_</span><span class="o">)</span> <span class="o">-</span> <span class="n">E</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b_</span><span class="o">)</span> <span class="o">+</span> <span class="n">E</span><span class="o">(</span><span class="n">a_</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span>  
+  <span class="o">}</span>
+     
+    
+  <span class="c1">//the result is a little higher than Tsirelso&#39;s bound only because `sin` is approximated</span>
+  <span class="k">def</span> <span class="n">correlate45degreesBetween</span><span class="o">(</span><span class="n">ground</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span> 
+    <span class="k">val</span> <span class="n">resolution</span> <span class="k">=</span> <span class="mi">400</span>
+    <span class="k">val</span> <span class="n">quantumCorrelation</span> <span class="k">=</span> 
+      <span class="n">correlateCoincidences</span><span class="o">(</span><span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="mf">0.0</span><span class="o">,</span> <span class="n">resolution</span><span class="o">),</span> <span class="n">pwmwave</span><span class="o">(</span><span class="n">ground</span> <span class="o">+</span> <span class="mf">0.125</span><span class="o">,</span> <span class="n">resolution</span><span class="o">))</span>
+    <span class="k">val</span> <span class="n">classicCorrelation</span> <span class="k">=</span> <span class="o">(</span><span class="n">quantumCorrelation</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">classicCorrelation</span>
+  <span class="o">}</span>
+ 
+<span class="o">}</span>
+
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;chsh = &quot;</span> <span class="o">+</span> <span class="n">experiment</span><span class="o">.</span><span class="n">chsh</span><span class="o">())</span>
+<span class="n">println</span><span class="o">(</span><span class="s">&quot;pi / 4 correlation = &quot;</span> <span class="o">+</span> <span class="n">experiment</span><span class="o">.</span><span class="n">correlate45degreesBetween</span><span class="o">(</span><span class="mf">0.333</span><span class="o">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>chsh = 2.4066588773919477
+pi / 4 correlation = 0.892022008253095
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[168]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">experiment</span></pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This model shows a non-linear autocorrelation. It doesn't violate Bell's inequalities, but unlike previous one - it's using binary sugnal (so it generelizes over non-coincidence based measurement with any time precision) only zeros and ones. Same as previous - the correlogram doesn't change when ground changes, it depends only on angle between detectors (tau).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[170]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-scala"><pre><span></span><span class="k">val</span> <span class="n">resolution</span> <span class="k">=</span> <span class="mi">100</span>
+
+<span class="k">def</span> <span class="n">scaledWave</span><span class="o">(</span><span class="n">scale</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> 
+  <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">((</span><span class="n">scale</span> <span class="o">*</span> <span class="n">resolution</span><span class="o">).</span><span class="n">toInt</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">((</span><span class="n">scale</span> <span class="o">*</span> <span class="n">resolution</span><span class="o">).</span><span class="n">toInt</span> <span class="o">/</span><span class="mi">2</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">dispersion</span><span class="o">(</span><span class="n">angle</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">exp</span><span class="o">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">angle</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">wave</span><span class="o">(</span><span class="n">angle</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="n">scaledWave</span><span class="o">(</span><span class="n">dispersion</span><span class="o">(</span><span class="n">angle</span><span class="o">))</span>
+
+<span class="k">def</span> <span class="n">correlate</span><span class="o">(</span><span class="n">left</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">],</span> <span class="n">right</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">size</span> <span class="k">=</span> <span class="n">max</span><span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">size</span><span class="o">,</span> <span class="n">right</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="c1">//min would introduce statistical dependency and violate Bell tests for instance</span>
+  <span class="k">val</span> <span class="n">count</span> <span class="k">=</span> <span class="o">(</span><span class="n">left</span><span class="o">.</span><span class="n">zipAll</span><span class="o">(</span><span class="n">right</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)).</span><span class="n">map</span> <span class="o">{</span> 
+    <span class="k">case</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">if</span> <span class="o">(</span><span class="n">l</span> <span class="o">==</span> <span class="n">r</span><span class="o">)</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="o">}.</span><span class="n">sum</span><span class="o">.</span><span class="n">toDouble</span> 
+  <span class="n">count</span> <span class="o">/</span> <span class="n">size</span>
+<span class="o">}</span>
+
+
+<span class="k">object</span> <span class="nc">model</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">step</span> <span class="k">=</span> <span class="mf">0.03</span>
+  <span class="k">val</span> <span class="n">ground</span> <span class="k">=</span> <span class="mf">0.0</span><span class="c1">//0.125//0.1</span>
+  <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="o">(</span><span class="mf">0.0</span> <span class="n">to</span> <span class="mf">1.0</span> <span class="n">by</span> <span class="n">step</span><span class="o">).</span><span class="n">toList</span>
+    
+  <span class="k">def</span> <span class="n">time</span><span class="o">()</span> <span class="k">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">currentTimeMillis</span><span class="o">()</span>
+  <span class="k">val</span> <span class="n">stamp</span> <span class="k">=</span> <span class="n">time</span><span class="o">()</span>
+  <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">xx</span> <span class="k">=&gt;</span> 
+     <span class="k">if</span> <span class="o">(</span><span class="n">time</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">stamp</span> <span class="o">+</span> <span class="mi">10000</span><span class="o">)</span>
+      <span class="n">correlate</span><span class="o">(</span><span class="n">wave</span><span class="o">(</span><span class="n">ground</span><span class="o">),</span> <span class="n">wave</span><span class="o">(</span><span class="n">xx</span> <span class="o">+</span> <span class="n">ground</span><span class="o">))</span>
+     <span class="k">else</span> <span class="mf">0.0</span>
+      
+  <span class="o">}</span>
+ <span class="c1">// val z = x.map(xx =&gt; correlate(waveClassic(ground + 0.0), waveClassic(xx + 0.5)))</span>
+
+  <span class="k">def</span> <span class="n">show</span><span class="o">()</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="nc">Scatter</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)).</span><span class="n">plot</span><span class="o">()</span>
+<span class="o">}</span>
 
 <span class="n">model</span><span class="o">.</span><span class="n">show</span><span class="o">()</span>
 </pre></div>
@@ -13933,7 +14129,7 @@ div#notebook {
 
 
 <div class="output_html rendered_html output_subarea ">
-<div class="chart" id="plot-1085548689"></div>
+<div class="chart" id="plot-1779086903"></div>
 </div>
 
 </div>
@@ -13944,19 +14140,18 @@ div#notebook {
 
 
 
-<div id="3d07fae8-3ed7-4277-b3d0-d68f4e93de1b"></div>
+<div id="4a5e8031-2914-43d3-888b-d7d12a839d5c"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#3d07fae8-3ed7-4277-b3d0-d68f4e93de1b');
+var element = $('#4a5e8031-2914-43d3-888b-d7d12a839d5c');
 requirejs(["plotly"], function(Plotly) {
   (function () {
-  var data0 = {"type":"scatter","x":[0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-0.99609375,-0.98828125,-0.98046875,-0.96484375,-0.94921875,-0.9296875,-0.90234375,-0.875,-0.84375,-0.80859375,-0.76953125,-0.7265625,-0.68359375,-0.63671875,-0.5859375,-0.53515625,-0.48046875,-0.421875,-0.3671875,-0.30859375,-0.24609375,-0.18359375,-0.125,-0.0625,0.0,0.0625,0.125,0.18359375,0.24609375,0.30859375,0.3671875,0.421875,0.48046875,0.53515625,0.5859375,0.63671875,0.68359375,0.7265625,0.76953125,0.80859375,0.84375,0.875,0.90234375,0.9296875,0.94921875,0.96484375,0.98046875,0.98828125,0.99609375,1.0,0.99609375,0.98828125,0.98046875,0.96484375,0.94921875,0.9296875,0.90234375,0.875,0.84375,0.80859375,0.76953125,0.7265625,0.68359375,0.63671875,0.5859375,0.53515625,0.48046875,0.421875,0.3671875,0.30859375,0.24609375,0.18359375,0.125,0.0625,0.0,-0.0625,-0.125,-0.18359375,-0.24609375,-0.30859375,-0.3671875,-0.421875,-0.48046875,-0.53515625,-0.5859375,-0.63671875,-0.68359375,-0.7265625,-0.76953125,-0.80859375,-0.84375,-0.875,-0.90234375,-0.9296875,-0.94921875,-0.96484375,-0.98046875,-0.98828125,-0.99609375,-1.0]};
-  var data1 = {"type":"scatter","x":[0.0,0.01,0.02,0.03,0.04,0.05,0.060000000000000005,0.07,0.08,0.09,0.09999999999999999,0.10999999999999999,0.11999999999999998,0.12999999999999998,0.13999999999999999,0.15,0.16,0.17,0.18000000000000002,0.19000000000000003,0.20000000000000004,0.21000000000000005,0.22000000000000006,0.23000000000000007,0.24000000000000007,0.25000000000000006,0.26000000000000006,0.2700000000000001,0.2800000000000001,0.2900000000000001,0.3000000000000001,0.3100000000000001,0.3200000000000001,0.3300000000000001,0.34000000000000014,0.35000000000000014,0.36000000000000015,0.37000000000000016,0.38000000000000017,0.3900000000000002,0.4000000000000002,0.4100000000000002,0.4200000000000002,0.4300000000000002,0.4400000000000002,0.45000000000000023,0.46000000000000024,0.47000000000000025,0.48000000000000026,0.49000000000000027,0.5000000000000002,0.5100000000000002,0.5200000000000002,0.5300000000000002,0.5400000000000003,0.5500000000000003,0.5600000000000003,0.5700000000000003,0.5800000000000003,0.5900000000000003,0.6000000000000003,0.6100000000000003,0.6200000000000003,0.6300000000000003,0.6400000000000003,0.6500000000000004,0.6600000000000004,0.6700000000000004,0.6800000000000004,0.6900000000000004,0.7000000000000004,0.7100000000000004,0.7200000000000004,0.7300000000000004,0.7400000000000004,0.7500000000000004,0.7600000000000005,0.7700000000000005,0.7800000000000005,0.7900000000000005,0.8000000000000005,0.8100000000000005,0.8200000000000005,0.8300000000000005,0.8400000000000005,0.8500000000000005,0.8600000000000005,0.8700000000000006,0.8800000000000006,0.8900000000000006,0.9000000000000006,0.9100000000000006,0.9200000000000006,0.9300000000000006,0.9400000000000006,0.9500000000000006,0.9600000000000006,0.9700000000000006,0.9800000000000006,0.9900000000000007,1.0000000000000007],"y":[-1.0,-0.9609375,-0.921875,-0.8828125,-0.84375,-0.80078125,-0.76171875,-0.72265625,-0.68359375,-0.640625,-0.6015625,-0.5625,-0.5234375,-0.48046875,-0.44140625,-0.40234375,-0.36328125,-0.3203125,-0.28125,-0.2421875,-0.203125,-0.16015625,-0.12109375,-0.08203125,-0.04296875,0.0,0.0390625,0.078125,0.1171875,0.15625,0.19921875,0.23828125,0.27734375,0.31640625,0.359375,0.3984375,0.4375,0.4765625,0.51953125,0.55859375,0.59765625,0.63671875,0.6796875,0.71875,0.7578125,0.796875,0.83984375,0.87890625,0.91796875,0.95703125,1.0,0.9609375,0.921875,0.8828125,0.84375,0.80078125,0.76171875,0.72265625,0.68359375,0.640625,0.6015625,0.5625,0.5234375,0.48046875,0.44140625,0.40234375,0.36328125,0.3203125,0.28125,0.2421875,0.203125,0.16015625,0.12109375,0.08203125,0.04296875,0.0,-0.0390625,-0.078125,-0.1171875,-0.15625,-0.19921875,-0.23828125,-0.27734375,-0.31640625,-0.359375,-0.3984375,-0.4375,-0.4765625,-0.51953125,-0.55859375,-0.59765625,-0.63671875,-0.6796875,-0.71875,-0.7578125,-0.796875,-0.83984375,-0.87890625,-0.91796875,-0.95703125,-1.0]};
+  var data0 = {"type":"scatter","x":[0.0,0.03,0.06,0.09,0.12,0.15,0.18,0.21,0.24,0.27,0.30000000000000004,0.33000000000000007,0.3600000000000001,0.3900000000000001,0.42000000000000015,0.4500000000000002,0.4800000000000002,0.5100000000000002,0.5400000000000003,0.5700000000000003,0.6000000000000003,0.6300000000000003,0.6600000000000004,0.6900000000000004,0.7200000000000004,0.7500000000000004,0.7800000000000005,0.8100000000000005,0.8400000000000005,0.8700000000000006,0.9000000000000006,0.9300000000000006,0.9600000000000006,0.9900000000000007],"y":[1.0,0.8928571428571429,0.7936507936507936,0.704225352112676,0.625,0.5494505494505495,0.49019607843137253,0.43478260869565216,0.38461538461538464,0.3401360544217687,0.30120481927710846,0.26737967914438504,0.23696682464454977,0.2109704641350211,0.1865671641791045,0.16556291390728478,0.1466275659824047,0.13020833333333334,0.11547344110854503,0.10245901639344263,0.09074410163339383,0.08051529790660225,0.07142857142857142,0.06337135614702155,0.056179775280898875,0.049800796812749,0.044169611307420496,0.03918495297805643,0.03474635163307853,0.030826140567200986,0.02733734281027884,0.024236548715462918,0.021496130696474634,0.01906941266209001]};
 
-  var data = [data0, data1];
+  var data = [data0];
   var layout = {};
 
-  Plotly.plot('plot-1085548689', data, layout);
+  Plotly.plot('plot-1779086903', data, layout);
 })();
 });
       
@@ -13966,89 +14161,18 @@ requirejs(["plotly"], function(Plotly) {
 </div>
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[2]:</div>
+<div class="prompt output_prompt">Out[170]:</div>
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">rotate</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">protoWave</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">pulseWave</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">waveQuantum</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">waveClassic</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">dwaveQuantum</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">dwaveClassic</span>
+<pre><span class="ansi-cyan-fg">resolution</span>: <span class="ansi-green-fg">Int</span> = <span class="ansi-green-fg">100</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">scaledWave</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">dispersion</span>
+defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">wave</span>
 defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">correlate</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">xor</span>
-defined <span class="ansi-green-fg">function</span> <span class="ansi-cyan-fg">xors</span>
 defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">model</span>
-<span class="ansi-cyan-fg">res1_11</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-1085548689&#34;</span></pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-scala"><pre><span></span><span class="k">object</span> <span class="nc">simulation</span> <span class="o">{</span>
-  
-
-  <span class="k">val</span> <span class="n">setupl</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">5</span><span class="o">)</span> <span class="c1">//0011 -&gt; 0235</span>
-  <span class="k">val</span> <span class="n">setupr</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">7</span><span class="o">)</span> <span class="c1">//1001 -&gt; 1247</span>
-
-
-  <span class="k">def</span> <span class="n">bell</span><span class="o">(</span><span class="n">isClassic</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-      
-      <span class="k">def</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setting</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> 
-        <span class="k">if</span> <span class="o">(</span><span class="n">isClassic</span><span class="o">)</span> <span class="n">dwaveClassic</span><span class="o">(</span><span class="n">setting</span><span class="o">)</span> <span class="k">else</span> <span class="n">dwaveQuantum</span><span class="o">(</span><span class="n">setting</span><span class="o">)</span>
-      
-      <span class="k">val</span> <span class="n">N</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="n">size</span>
-      <span class="k">val</span> <span class="n">ab</span> <span class="k">=</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">0</span><span class="o">)</span> <span class="o">++</span> <span class="nc">List</span><span class="o">.</span><span class="n">fill</span><span class="o">(</span><span class="n">N</span><span class="o">)(</span><span class="mi">1</span><span class="o">)</span>
-      <span class="k">val</span> <span class="n">left</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupl</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
-      <span class="k">val</span> <span class="n">right</span> <span class="k">=</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">2</span><span class="o">))</span> <span class="o">++</span> <span class="n">dwave</span><span class="o">(</span><span class="n">setupr</span><span class="o">(</span><span class="mi">3</span><span class="o">))</span>
-      
-      <span class="o">(</span><span class="n">xors</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="n">zip</span> <span class="n">ab</span><span class="o">).</span><span class="n">count</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">_1</span> <span class="o">==</span> <span class="n">x</span><span class="o">.</span><span class="n">_2</span><span class="o">).</span><span class="n">toDouble</span> <span class="o">/</span> <span class="n">ab</span><span class="o">.</span><span class="n">size</span>
-  <span class="o">}</span>
-
-<span class="o">}</span>
-
-<span class="n">println</span><span class="o">(</span><span class="s">&quot;bell = &quot;</span> <span class="o">+</span> <span class="n">simulation</span><span class="o">.</span><span class="n">bell</span><span class="o">())</span>
-<span class="n">println</span><span class="o">(</span><span class="s">&quot;bellClassic = &quot;</span> <span class="o">+</span> <span class="n">simulation</span><span class="o">.</span><span class="n">bell</span><span class="o">(</span><span class="kc">true</span><span class="o">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-bell = 0.853515625
-List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-bellClassic = 0.75
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[3]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>defined <span class="ansi-green-fg">object</span> <span class="ansi-cyan-fg">simulation</span></pre>
+<span class="ansi-cyan-fg">res169_6</span>: <span class="ansi-green-fg">String</span> = <span class="ansi-green-fg">&#34;plot-1779086903&#34;</span></pre>
 </div>
 
 </div>
